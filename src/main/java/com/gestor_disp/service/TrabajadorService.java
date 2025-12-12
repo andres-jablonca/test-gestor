@@ -1,13 +1,18 @@
 package com.gestor_disp.service;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.gestor_disp.model.Dispositivo;
 import com.gestor_disp.model.Trabajador;
 import com.gestor_disp.repository.TrabajadorRepository;
 
 import lombok.RequiredArgsConstructor;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @Service
 @RequiredArgsConstructor
@@ -59,8 +64,28 @@ public class TrabajadorService {
         trabajadorRepository.deleteById(rut);
     }
 
-    public byte[] generarPdfTrabajadores() {
-        List<Trabajador> trabajadores = obtenerTrabajadores();
-        return jasperReportService.generarReporteTrabajadores(trabajadores);
-    }
+    public byte[] generarPdfAnexoContrato(String rut) {
+    Trabajador t = obtenerTrabajadorPorRut(rut);
+
+    Map<String, Object> params = new HashMap<>();
+    params.put("rut", t.getRut());
+    params.put("primerNombre", t.getPrimerNombre());
+    params.put("apellidoPaterno", t.getApellidoPaterno());
+    params.put("apellidoMaterno", t.getApellidoMaterno());
+    params.put("direccion", t.getDireccion());
+    params.put("comuna", t.getComuna());
+    params.put("nacionalidad", t.getNacionalidad());
+    params.put("fechaNacimiento", java.sql.Date.valueOf(t.getFechaNacimiento()));
+    // Como tu modelo NO tiene empresa/empresaRut, por ahora:
+    params.put("empresa", "Finterra");
+    params.put("empresaRut", "76.311.552-6");
+
+    // opcional (tu JRXML ya tiene defaultValueExpression, pero lo puedes controlar)
+    params.put("fechaEmision", new Date());
+
+    List<Dispositivo> disp = (t.getDispositivosAsociado() != null) ? t.getDispositivosAsociado() : List.of();
+    params.put("dispositivosDataSource", new JRBeanCollectionDataSource(disp));
+
+    return jasperReportService.generateReport(params, "/jasper/anexo_contrato.jrxml");
+}
 }

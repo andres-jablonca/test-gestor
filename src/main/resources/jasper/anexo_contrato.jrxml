@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Compatible con JasperReports 6.21.5 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components"
+	xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd
+                        http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd"
+	name="anexo_contrato" pageWidth="595" pageHeight="842"
+	whenNoDataType="AllSectionsNoDetail"
+	columnWidth="515" leftMargin="40" rightMargin="40" topMargin="30" bottomMargin="30"
+	uuid="b0e4c3d2-7d2a-4b35-9c9b-2d8e8a0b8c11">
+
+	<style name="TableHeader" mode="Opaque" backcolor="#EEEEEE" fontName="DejaVu Sans" fontSize="9" isBold="true">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#999999"/>
+			<leftPen lineWidth="0.5" lineColor="#999999"/>
+			<bottomPen lineWidth="0.5" lineColor="#999999"/>
+			<rightPen lineWidth="0.5" lineColor="#999999"/>
+		</box>
+	</style>
+
+	<style name="TableCell" fontName="DejaVu Sans" fontSize="9">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#DDDDDD"/>
+			<leftPen lineWidth="0.5" lineColor="#DDDDDD"/>
+			<bottomPen lineWidth="0.5" lineColor="#DDDDDD"/>
+			<rightPen lineWidth="0.5" lineColor="#DDDDDD"/>
+		</box>
+	</style>
+
+	<!-- Dataset para la tabla -->
+	<subDataset name="DispositivosDataset" uuid="3c32b1ee-8d76-4e3a-9b8a-5d2e8a0c0f22">
+		<field name="tipoDispositivo" class="java.lang.String"/>
+		<field name="marca" class="java.lang.String"/>
+		<field name="modelo" class="java.lang.String"/>
+		<field name="codigoIdentificador" class="java.lang.String"/>
+		<field name="numeroTelefono" class="java.lang.String"/>
+	</subDataset>
+
+	<!-- Parámetros -->
+	<parameter name="rut" class="java.lang.String"/>
+	<parameter name="primerNombre" class="java.lang.String"/>
+	<parameter name="apellidoPaterno" class="java.lang.String"/>
+	<parameter name="apellidoMaterno" class="java.lang.String"/>
+	<parameter name="direccion" class="java.lang.String"/>
+	<parameter name="comuna" class="java.lang.String"/>
+	<parameter name="nacionalidad" class="java.lang.String"/>
+	<parameter name="empresa" class="java.lang.String"/>
+	<parameter name="empresaRut" class="java.lang.String"/>
+	<parameter name="fechaNacimiento" class="java.util.Date"/>
+	<parameter name="dispositivosDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+
+	<parameter name="fechaEmision" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new java.util.Date()]]></defaultValueExpression>
+	</parameter>
+
+	<!-- Variable de tiempo (para tus textfields largos) -->
+	<variable name="REPORT_TIME" class="java.util.Date" resetType="Report">
+		<variableExpression><![CDATA[new java.util.Date()]]></variableExpression>
+	</variable>
+
+	<title>
+		<band height="70">
+			<textField>
+				<reportElement x="0" y="0" width="515" height="22" uuid="e5b92b42-b8a7-473d-9872-f620093695d7"/>
+				<textElement textAlignment="Center">
+					<font fontName="DejaVu Sans" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ANEXO DE CONTRATO - ASIGNACION DE DISPOSITIVOS"]]></textFieldExpression>
+			</textField>
+
+			<textField>
+				<reportElement x="0" y="28" width="515" height="14" uuid="18b571b8-fda6-433f-9136-85dd97da3ca8"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["Empresa: " + ($P{empresa} == null ? "" : $P{empresa}) + "  |  RUT: " + ($P{empresaRut} == null ? "" : $P{empresaRut})]]></textFieldExpression>
+			</textField>
+
+			<textField pattern="dd-MM-yyyy HH:mm">
+				<reportElement x="0" y="48" width="515" height="14" uuid="bcddbfb2-ad4e-46e6-a133-6b0bae185461"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{fechaEmision}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+
+	<pageHeader>
+		<band height="8">
+			<line>
+				<reportElement x="0" y="4" width="515" height="1" uuid="af4fef01-bc9f-4c0e-9f0e-d7c703f5037b"/>
+			</line>
+		</band>
+	</pageHeader>
+
+	<!-- Clave: splitType="Stretch" + elementos FLOAT + isStretchWithOverflow -->
+	<detail>
+		<band height="620" splitType="Stretch">
+
+			<staticText>
+				<reportElement x="0" y="0" width="515" height="16" uuid="4116a106-d668-4412-a764-8ad6f2ce7337"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Datos del trabajador]]></text>
+			</staticText>
+
+			<staticText>
+				<reportElement x="0" y="24" width="120" height="14" uuid="806bd74c-50ea-4cc7-8ba2-e4d329617656"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+
+			<textField>
+				<reportElement x="125" y="24" width="390" height="14" uuid="8e52b2da-76b5-41b5-a830-e33311450ebe"/>
+				<textFieldExpression><![CDATA[($P{primerNombre} == null ? "" : $P{primerNombre}) + " " +
+($P{apellidoPaterno} == null ? "" : $P{apellidoPaterno}) + " " +
+($P{apellidoMaterno} == null ? "" : $P{apellidoMaterno})]]></textFieldExpression>
+			</textField>
+
+			<staticText>
+				<reportElement x="0" y="42" width="120" height="14" uuid="4ac67e98-6bb9-4997-8ab5-dfd90fabf404"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RUT]]></text>
+			</staticText>
+
+			<textField>
+				<reportElement x="125" y="42" width="160" height="14" uuid="0bad5d0e-dc51-4280-81a4-5a755d034413"/>
+				<textFieldExpression><![CDATA[$P{rut}]]></textFieldExpression>
+			</textField>
+
+			<staticText>
+				<reportElement x="300" y="42" width="90" height="14" uuid="6d0a5202-6c6d-432b-b9e8-520aaecf69dd"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nacionalidad]]></text>
+			</staticText>
+
+			<textField>
+				<reportElement x="395" y="42" width="120" height="14" uuid="904917d4-32f2-4805-9d31-ab0c2edc8aed"/>
+				<textFieldExpression><![CDATA[$P{nacionalidad}]]></textFieldExpression>
+			</textField>
+
+			<staticText>
+				<reportElement x="0" y="60" width="120" height="14" uuid="b1256c5b-a7ba-490b-86d8-d27031881904"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Direccion]]></text>
+			</staticText>
+
+			<textField textAdjust="StretchHeight">
+				<reportElement x="125" y="60" width="390" height="14" positionType="Float" uuid="dfdc0fec-50b4-4063-9f6f-4f78b48fe842"/>
+				<textFieldExpression><![CDATA[$P{direccion}]]></textFieldExpression>
+			</textField>
+
+			<staticText>
+				<reportElement x="0" y="78" width="120" height="14" uuid="76c0229e-9cce-4147-bf25-86fa0eab3ad6"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comuna]]></text>
+			</staticText>
+
+			<textField>
+				<reportElement x="125" y="78" width="390" height="14" uuid="7d742817-1398-48d6-ba8d-ede34fc666bb"/>
+				<textFieldExpression><![CDATA[$P{comuna}]]></textFieldExpression>
+			</textField>
+
+			<line>
+				<reportElement x="0" y="95" width="515" height="1" uuid="58b47336-9e12-4980-960a-f9b3a134b564"/>
+			</line>
+
+			<!-- TEXTFIELD LARGO 1 (ANTES y=100) -->
+			<textField textAdjust="StretchHeight">
+				<reportElement x="6" y="105" width="503" height="105" positionType="Float" uuid="afbf6a5c-9c6e-4b1c-b257-ad8a6b189ff5"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[
+"  En Santiago, " +
+new java.text.SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new java.util.Locale("es","CL")).format($V{REPORT_TIME}) +
+", entre Finterra Servicios Financieros S.A., Rut Nº 76.311.552-6, en adelante el \"Empleador\", con domicilio en Av Vitacura N° 2736 oficina 501, Comuna de Las Condes, de esta ciudad y representada para estos efectos por don Joaquín Manterola Gana C.I. N.º 9.908.106-6, todos del mismo domicilio de su representada por una parte y Don(a) " +
+($P{primerNombre} == null ? "" : $P{primerNombre}) + " " +
+($P{apellidoPaterno} == null ? "" : $P{apellidoPaterno}) + " " +
+($P{apellidoMaterno} == null ? "" : $P{apellidoMaterno}) +
+", de nacionalidad " + ($P{nacionalidad} == null ? "" : $P{nacionalidad}) +
+", fecha de nacimiento " + ($P{fechaNacimiento} == null ? "" : new java.text.SimpleDateFormat("dd-MM-yyyy").format($P{fechaNacimiento})) +
+", C.I. N° " + ($P{rut} == null ? "" : $P{rut}) +
+", con domicilio en " + ($P{direccion} == null ? "" : $P{direccion}) +
+", Comuna " + ($P{comuna} == null ? "" : $P{comuna}) +
+", en adelante \"El Trabajador\" por la otra parte, se ha convenido el siguiente Anexo Contrato de Trabajo:"
+]]></textFieldExpression>
+			</textField>
+
+			<!-- TEXTFIELD LARGO 2 (ANTES y=200) -->
+			<textField textAdjust="StretchHeight">
+				<reportElement x="6" y="210" width="503" height="120" positionType="Float" uuid="44efce50-4af4-4bfb-a203-f2020e04751d"/>
+				<textFieldExpression><![CDATA[
+"CLAUSULA PRIMERA: Que de común acuerdo las partes vienen en modificar la cláusula primera del Contrato de Trabajo suscrito con fecha " +
+new java.text.SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new java.util.Locale("es","CL")).format($V{REPORT_TIME}) +
+" y sus anexos en lo siguiente:\n\n\n" +
+"\"1.-En este acto " +
+($P{primerNombre} == null ? "" : $P{primerNombre}) + " " +
+($P{apellidoPaterno} == null ? "" : $P{apellidoPaterno}) + " " +
+($P{apellidoMaterno} == null ? "" : $P{apellidoMaterno}) +
+", recibe de parte del empleador la siguiente herramienta de trabajo, debiendo el trabajador emplear el máximo cuidado en la conservación y mantención de los equipos, destinándolos en forma exclusiva al cumplimiento de las funciones que el contrato de trabajo suscrito entre las partes le impone.\"\n\n" +
+"\"2.- Velar por la custodia de los equipos en todo momento, evitando pérdidas o mermas en estos.\"\n\n" +
+"\"3.- Registrar la entrega del equipo en el registro que para tal efecto tendrá la empresa, con todos los datos requeridos en éste.\"\n\n" +
+"\"4.- Evitar hacer uso innecesario o excesivo del equipo, limitándolo al exclusivo uso para el ejercicio de sus funciones durante la jornada laboral.\"\n\n" +
+"\"5.- Asimismo, evitar situaciones de riesgo que puedan dañar o afectar el funcionamiento a los equipos, tales como beber líquidos o ingerir alimentos cerca de ellos, utilizarlos para tareas que no tengan relación con la labor encomendada por la Empresa, entre otros.\"\n\n" +
+"\"6.- Devolver íntegra y oportunamente el o los equipo(s) entregados por la Empresa, al término de la jornada, o bien, cuando ya no fueran requeridos o a sola solicitud de la Empresa, registrando su devolución en el registro que para tal efecto tiene el Empleador.\""
+]]></textFieldExpression>
+			</textField>
+
+			<!-- Separador -->
+			<line>
+				<reportElement x="0" y="340" width="515" height="1" positionType="Float" uuid="8411b316-5bb2-4d23-b0cd-ce845fc1b083"/>
+			</line>
+
+			<staticText>
+				<reportElement x="0" y="350" width="515" height="16" positionType="Float" uuid="3bbb5d73-ce45-4faf-b80d-0bf029033507"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dispositivos asignados]]></text>
+			</staticText>
+
+			<componentElement>
+				<reportElement x="0" y="372" width="515" height="170" positionType="Float" uuid="a5a2a0e2-13ef-4cc2-bf4e-f6f0e4b0f1a9"/>
+				<jr:table>
+					<datasetRun subDataset="DispositivosDataset" uuid="6e879a4c-e964-48df-8c1a-bbe84db649c3">
+						<dataSourceExpression><![CDATA[$P{dispositivosDataSource}]]></dataSourceExpression>
+					</datasetRun>
+
+					<jr:column width="95" uuid="32156b7b-2144-4c71-b102-d4ebeba84e8b">
+						<jr:columnHeader height="18">
+							<staticText>
+								<reportElement style="TableHeader" x="0" y="0" width="95" height="18" uuid="482d1fe7-39e8-4412-be2d-f98a1f1341bd"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Tipo]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="18">
+							<textField>
+								<reportElement style="TableCell" x="0" y="0" width="95" height="18" uuid="1300999a-2ddf-40aa-b80e-701ff4146002"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{tipoDispositivo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+
+					<jr:column width="85" uuid="08f35f1d-b6c6-4909-a91f-945037ecff24">
+						<jr:columnHeader height="18">
+							<staticText>
+								<reportElement style="TableHeader" x="0" y="0" width="85" height="18" uuid="91a562e9-f323-4724-a3e3-65ac68e75c6f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Marca]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="18">
+							<textField>
+								<reportElement style="TableCell" x="0" y="0" width="85" height="18" uuid="51c83018-d4f1-43e3-a723-88e8c3a4c459"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{marca}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+
+					<jr:column width="85" uuid="ed4b3a7f-cd05-4631-a790-208914b3d4c7">
+						<jr:columnHeader height="18">
+							<staticText>
+								<reportElement style="TableHeader" x="0" y="0" width="85" height="18" uuid="d9d32cfe-5972-4912-8595-10f50b454d78"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Modelo]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="18">
+							<textField>
+								<reportElement style="TableCell" x="0" y="0" width="85" height="18" uuid="7cd44b5a-de56-49f2-9e88-452da41a4499"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{modelo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+
+					<jr:column width="145" uuid="56b57266-3240-44f5-bdf4-47ef35e08259">
+						<jr:columnHeader height="18">
+							<staticText>
+								<reportElement style="TableHeader" x="0" y="0" width="145" height="18" uuid="d74ab286-cc9f-45c8-addd-83eb95b9a5a3"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Codigo Identificador]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="18">
+							<textField>
+								<reportElement style="TableCell" x="0" y="0" width="145" height="18" uuid="33044942-6d95-49c8-858b-ced44a211d0a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{codigoIdentificador}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+
+					<jr:column width="105" uuid="6ae7b7fb-648e-4265-906d-0c1da00461ed">
+						<jr:columnHeader height="18">
+							<staticText>
+								<reportElement style="TableHeader" x="0" y="0" width="105" height="18" uuid="04c5bd76-e072-4173-b71f-139f6193b21f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[N / Telefono]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="18">
+							<textField>
+								<reportElement style="TableCell" x="0" y="0" width="105" height="18" uuid="24664c74-d46c-4acc-9c5b-a206f982796a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{numeroTelefono}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+
+				</jr:table>
+			</componentElement>
+
+			<textField textAdjust="StretchHeight">
+				<reportElement x="0" y="548" width="515" height="40" positionType="Float" uuid="61833b36-f8de-44d4-bd19-66ae7a1327a3"/>
+				<textFieldExpression><![CDATA[
+"Declaro haber recibido los dispositivos detallados anteriormente, en condicion operativa, " +
+"comprometiendome a su cuidado y devolucion segun las politicas internas de la empresa."
+]]></textFieldExpression>
+			</textField>
+
+		</band>
+	</detail>
+
+	<pageFooter>
+		<band height="24">
+			<textField>
+				<reportElement x="0" y="5" width="260" height="14" uuid="9728d6da-99d0-4042-be93-93f58915ca92"/>
+				<textFieldExpression><![CDATA["Firma Trabajador: ____________________________"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="285" y="6" width="230" height="14" uuid="5e73cb70-d153-407b-aafa-27d93db5404d"/>
+				<textFieldExpression><![CDATA["Firma Empresa: ____________________________"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+
+</jasperReport>

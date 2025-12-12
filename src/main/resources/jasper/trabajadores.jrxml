@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.5.final using JasperReports Library version 6.21.5-74d586df47b25dbd05bd0957999819196e59934a  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="anexo_contrato" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="30" bottomMargin="30" uuid="b0e4c3d2-7d2a-4b35-9c9b-2d8e8a0b8c11">
+	<style name="Title" fontName="DejaVu Sans" fontSize="16" isBold="true"/>
+	<style name="H1" fontName="DejaVu Sans" fontSize="12" isBold="true"/>
+	<style name="Label" fontName="DejaVu Sans" fontSize="10" isBold="true"/>
+	<style name="Value" fontName="DejaVu Sans" fontSize="10"/>
+	<style name="TableHeader" mode="Opaque" backcolor="#EEEEEE" fontName="DejaVu Sans" fontSize="9" isBold="true">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#999999"/>
+			<leftPen lineWidth="0.5" lineColor="#999999"/>
+			<bottomPen lineWidth="0.5" lineColor="#999999"/>
+			<rightPen lineWidth="0.5" lineColor="#999999"/>
+		</box>
+	</style>
+	<style name="TableCell" fontName="DejaVu Sans" fontSize="9">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#DDDDDD"/>
+			<leftPen lineWidth="0.5" lineColor="#DDDDDD"/>
+			<bottomPen lineWidth="0.5" lineColor="#DDDDDD"/>
+			<rightPen lineWidth="0.5" lineColor="#DDDDDD"/>
+		</box>
+	</style>
+	<subDataset name="DispositivosDataset" uuid="3c32b1ee-8d76-4e3a-9b8a-5d2e8a0c0f22">
+		<field name="tipoDispositivo" class="java.lang.String"/>
+		<field name="marca" class="java.lang.String"/>
+		<field name="modelo" class="java.lang.String"/>
+		<field name="codigoIdentificador" class="java.lang.String"/>
+		<field name="numero" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="rut" class="java.lang.String"/>
+	<parameter name="primerNombre" class="java.lang.String"/>
+	<parameter name="apellidoPaterno" class="java.lang.String"/>
+	<parameter name="apellidoMaterno" class="java.lang.String"/>
+	<parameter name="direccion" class="java.lang.String"/>
+	<parameter name="comuna" class="java.lang.String"/>
+	<parameter name="nacionalidad" class="java.lang.String"/>
+	<parameter name="empresa" class="java.lang.String"/>
+	<parameter name="empresaRut" class="java.lang.String"/>
+	<parameter name="dispositivosDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<parameter name="fechaEmision" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new java.util.Date()]]></defaultValueExpression>
+	</parameter>
+	<title>
+		<band height="70">
+			<textField>
+				<reportElement x="0" y="0" width="515" height="22" uuid="e5b92b42-b8a7-473d-9872-f620093695d7"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ANEXO DE CONTRATO – ASIGNACIÓN DE DISPOSITIVOS"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="28" width="515" height="14" uuid="18b571b8-fda6-433f-9136-85dd97da3ca8"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["Empresa: " + ($P{empresa} == null ? "" : $P{empresa}) + "  |  RUT: " + ($P{empresaRut} == null ? "" : $P{empresaRut})]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MM-yyyy HH:mm">
+				<reportElement x="0" y="48" width="515" height="14" uuid="bcddbfb2-ad4e-46e6-a133-6b0bae185461"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{fechaEmision}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="8">
+			<line>
+				<reportElement x="0" y="4" width="515" height="1" uuid="af4fef01-bc9f-4c0e-9f0e-d7c703f5037b"/>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="360">
+			<staticText>
+				<reportElement x="0" y="0" width="515" height="16" uuid="4116a106-d668-4412-a764-8ad6f2ce7337"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Datos del trabajador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="24" width="120" height="14" uuid="806bd74c-50ea-4cc7-8ba2-e4d329617656"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="125" y="24" width="390" height="14" uuid="8e52b2da-76b5-41b5-a830-e33311450ebe"/>
+				<textFieldExpression><![CDATA[($P{primerNombre} == null ? "" : $P{primerNombre}) + " " +
+                    ($P{apellidoPaterno} == null ? "" : $P{apellidoPaterno}) + " " +
+                    ($P{apellidoMaterno} == null ? "" : $P{apellidoMaterno})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="42" width="120" height="14" uuid="4ac67e98-6bb9-4997-8ab5-dfd90fabf404"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RUT]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="125" y="42" width="160" height="14" uuid="0bad5d0e-dc51-4280-81a4-5a755d034413"/>
+				<textFieldExpression><![CDATA[$P{rut}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="300" y="42" width="90" height="14" uuid="6d0a5202-6c6d-432b-b9e8-520aaecf69dd"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nacionalidad]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="395" y="42" width="120" height="14" uuid="904917d4-32f2-4805-9d31-ab0c2edc8aed"/>
+				<textFieldExpression><![CDATA[$P{nacionalidad}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="60" width="120" height="14" uuid="b1256c5b-a7ba-490b-86d8-d27031881904"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dirección]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="125" y="60" width="390" height="14" uuid="dfdc0fec-50b4-4063-9f6f-4f78b48fe842"/>
+				<textFieldExpression><![CDATA[$P{direccion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="78" width="120" height="14" uuid="76c0229e-9cce-4147-bf25-86fa0eab3ad6"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comuna]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="125" y="78" width="390" height="14" uuid="7d742817-1398-48d6-ba8d-ede34fc666bb"/>
+				<textFieldExpression><![CDATA[$P{comuna}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="102" width="515" height="1" uuid="8411b316-5bb2-4d23-b0cd-ce845fc1b083"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="112" width="515" height="16" uuid="3bbb5d73-ce45-4faf-b80d-0bf029033507"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dispositivos asignados]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="0" y="134" width="515" height="170" uuid="a5a2a0e2-13ef-4cc2-bf4e-f6f0e4b0f1a9"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="DispositivosDataset" uuid="6e879a4c-e964-48df-8c1a-bbe84db649c3">
+						<dataSourceExpression><![CDATA[$P{dispositivosDataSource}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="95" uuid="0aeac6ee-b919-4264-9e71-a146f39a9134">
+						<jr:columnHeader height="18">
+							<staticText>
+								<reportElement style="TableHeader" x="0" y="0" width="95" height="18" uuid="02a7cec2-e6c9-4797-9182-7a7e2401bfc1"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Tipo]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="18">
+							<textField>
+								<reportElement style="TableCell" x="0" y="0" width="95" height="18" uuid="6a51afda-cc7e-4aaa-9c04-af63796e4fb5"/>
+								<textFieldExpression><![CDATA[$F{tipoDispositivo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="85" uuid="2c9952e9-75a0-45ec-8824-ea2f5629406c">
+						<jr:columnHeader height="18">
+							<staticText>
+								<reportElement style="TableHeader" x="0" y="0" width="85" height="18" uuid="e06a2c97-a74c-4bed-81ac-0951a89a13ff"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Marca]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="18">
+							<textField>
+								<reportElement style="TableCell" x="0" y="0" width="85" height="18" uuid="ec878ae9-5ed3-4b26-8de4-3450a99adddd"/>
+								<textFieldExpression><![CDATA[$F{marca}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="85" uuid="81dcd556-8a2e-44e5-af27-8630905e0eb0">
+						<jr:columnHeader height="18">
+							<staticText>
+								<reportElement style="TableHeader" x="0" y="0" width="85" height="18" uuid="0bda8a58-2ce6-4f26-b681-c96ec4485700"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Modelo]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="18">
+							<textField>
+								<reportElement style="TableCell" x="0" y="0" width="85" height="18" uuid="1706aeae-f3fa-44f6-ab19-1cf7bcea7dd8"/>
+								<textFieldExpression><![CDATA[$F{modelo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="145" uuid="78b4fba4-9572-4fc3-8dd1-a0ce66e8c3cd">
+						<jr:columnHeader height="18">
+							<staticText>
+								<reportElement style="TableHeader" x="0" y="0" width="145" height="18" uuid="6c2f4385-dcec-4532-abf6-110509bf5af7"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Código Identificador]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="18">
+							<textField>
+								<reportElement style="TableCell" x="0" y="0" width="145" height="18" uuid="22501f6d-2495-48cc-b67d-905b3ffc726f"/>
+								<textFieldExpression><![CDATA[$F{codigoIdentificador}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="105" uuid="0c9e86f0-0632-4666-83d8-d42a2473d443">
+						<jr:columnHeader height="18">
+							<staticText>
+								<reportElement style="TableHeader" x="0" y="0" width="105" height="18" uuid="0187da76-2450-4248-b817-dea38f307d2a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[N° / Teléfono]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="18">
+							<textField>
+								<reportElement style="TableCell" x="0" y="0" width="105" height="18" uuid="4cd89836-794a-48a3-8794-c07c0a411d43"/>
+								<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="0" y="312" width="515" height="40" uuid="61833b36-f8de-44d4-bd19-66ae7a1327a3"/>
+				<textFieldExpression><![CDATA["Declaro haber recibido los dispositivos detallados anteriormente, en condición operativa, " +
+                    "comprometiéndome a su cuidado y devolución según las políticas internas de la empresa."]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="24">
+			<textField>
+				<reportElement x="0" y="6" width="260" height="14" uuid="9728d6da-99d0-4042-be93-93f58915ca92"/>
+				<textFieldExpression><![CDATA["Firma Trabajador: ____________________________"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="285" y="6" width="230" height="14" uuid="5e73cb70-d153-407b-aafa-27d93db5404d"/>
+				<textFieldExpression><![CDATA["Firma Empresa: ____________________________"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

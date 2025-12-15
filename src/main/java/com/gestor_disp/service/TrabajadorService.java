@@ -17,7 +17,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 @Service
 @RequiredArgsConstructor
 public class TrabajadorService {
-    
+
     private final TrabajadorRepository trabajadorRepository;
     private final JasperReportService jasperReportService;
 
@@ -65,27 +65,42 @@ public class TrabajadorService {
     }
 
     public byte[] generarPdfAnexoContrato(String rut) {
-    Trabajador t = obtenerTrabajadorPorRut(rut);
+        Trabajador t = obtenerTrabajadorPorRut(rut);
 
-    Map<String, Object> params = new HashMap<>();
-    params.put("rut", t.getRut());
-    params.put("primerNombre", t.getPrimerNombre());
-    params.put("apellidoPaterno", t.getApellidoPaterno());
-    params.put("apellidoMaterno", t.getApellidoMaterno());
-    params.put("direccion", t.getDireccion());
-    params.put("comuna", t.getComuna());
-    params.put("nacionalidad", t.getNacionalidad());
-    params.put("fechaNacimiento", java.sql.Date.valueOf(t.getFechaNacimiento()));
-    // Como tu modelo NO tiene empresa/empresaRut, por ahora:
-    params.put("empresa", "Finterra");
-    params.put("empresaRut", "76.311.552-6");
+        Map<String, Object> params = new HashMap<>();
+        params.put("rut", t.getRut());
+        params.put("primerNombre", t.getPrimerNombre());
+        params.put("apellidoPaterno", t.getApellidoPaterno());
+        params.put("apellidoMaterno", t.getApellidoMaterno());
+        params.put("direccion", t.getDireccion());
+        params.put("comuna", t.getComuna());
+        params.put("nacionalidad", t.getNacionalidad());
+        params.put("fechaNacimiento", java.sql.Date.valueOf(t.getFechaNacimiento()));
+        params.put("empresa", "Finterra");
+        params.put("empresaRut", "76.311.552-6");
 
-    // opcional (tu JRXML ya tiene defaultValueExpression, pero lo puedes controlar)
-    params.put("fechaEmision", new Date());
+        params.put("fechaEmision", new Date());
 
-    List<Dispositivo> disp = (t.getDispositivosAsociado() != null) ? t.getDispositivosAsociado() : List.of();
-    params.put("dispositivosDataSource", new JRBeanCollectionDataSource(disp));
+        List<Dispositivo> disp = (t.getDispositivosAsociado() != null) ? t.getDispositivosAsociado() : List.of();
+        params.put("dispositivosDataSource", new JRBeanCollectionDataSource(disp));
 
-    return jasperReportService.generateReport(params, "/jasper/anexo_contrato.jrxml");
-}
+        return jasperReportService.generateReport(params, "/jasper/anexo_contrato.jrxml");
+    }
+
+    public byte[] generarPdfDispositivosTrabajador(String rut) {
+        Trabajador t = obtenerTrabajadorPorRut(rut);
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("rut", t.getRut());
+        params.put("primerNombre", t.getPrimerNombre());
+        params.put("segundoNombre", t.getSegundoNombre());
+        params.put("apellidoPaterno", t.getApellidoPaterno());
+        params.put("apellidoMaterno", t.getApellidoMaterno());
+        params.put("email", t.getEmail());
+
+        List<Dispositivo> disp = (t.getDispositivosAsociado() != null) ? t.getDispositivosAsociado() : List.of();
+        params.put("dispositivosDataSource", new JRBeanCollectionDataSource(disp));
+
+        return jasperReportService.generateReport(params, "/jasper/trabajadores_dispositivos.jrxml");
+    }
 }

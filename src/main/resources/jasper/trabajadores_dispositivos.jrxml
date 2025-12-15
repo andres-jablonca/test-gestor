@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.5.final using JasperReports Library version 6.20.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dispositivos_trabajador" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="30" bottomMargin="30" uuid="f7cc62f5-b315-4231-a197-ae76e8b994aa">
+	<style name="Title" fontName="DejaVu Sans" fontSize="16" isBold="true"/>
+	<style name="H1" fontName="DejaVu Sans" fontSize="12" isBold="true"/>
+	<style name="Label" fontName="DejaVu Sans" fontSize="10" isBold="true"/>
+	<style name="Value" fontName="DejaVu Sans" fontSize="10"/>
+	<style name="TableHeader" mode="Opaque" backcolor="#EEEEEE" fontName="DejaVu Sans" fontSize="9" isBold="true">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#999999"/>
+			<leftPen lineWidth="0.5" lineColor="#999999"/>
+			<bottomPen lineWidth="0.5" lineColor="#999999"/>
+			<rightPen lineWidth="0.5" lineColor="#999999"/>
+		</box>
+	</style>
+	<style name="TableCell" fontName="DejaVu Sans" fontSize="9">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#DDDDDD"/>
+			<leftPen lineWidth="0.5" lineColor="#DDDDDD"/>
+			<bottomPen lineWidth="0.5" lineColor="#DDDDDD"/>
+			<rightPen lineWidth="0.5" lineColor="#DDDDDD"/>
+		</box>
+	</style>
+	<subDataset name="DispositivosDataset" uuid="3164f37d-b064-4d51-9272-fc0d409a4649">
+		<field name="codigoIdentificador" class="java.lang.String"/>
+		<field name="marca" class="java.lang.String"/>
+		<field name="modelo" class="java.lang.String"/>
+		<field name="precio" class="java.lang.String"/>
+		<field name="fechaAdquisicion" class="java.time.LocalDate"/>
+	</subDataset>
+	<parameter name="rut" class="java.lang.String"/>
+	<parameter name="primerNombre" class="java.lang.String"/>
+	<parameter name="apellidoPaterno" class="java.lang.String"/>
+	<parameter name="apellidoMaterno" class="java.lang.String"/>
+	<parameter name="email" class="java.lang.String"/>
+	<parameter name="dispositivosDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<parameter name="fechaEmision" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new java.util.Date()]]></defaultValueExpression>
+	</parameter>
+	<title>
+		<band height="70">
+			<textField>
+				<reportElement style="Title" x="0" y="0" width="515" height="22" uuid="f04b7c63-2f9f-4f9b-a7e1-9b15e9c965cf"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["DISPOSITIVOS DEL TRABAJADOR"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Value" x="0" y="28" width="515" height="14" uuid="fd1630f0-4a9c-4b5f-a550-8c11d1b8e8ee"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["RUT: " + ($P{rut} == null ? "" : $P{rut}) +
+"  |  Trabajador: " + ($P{primerNombre} == null ? "" : $P{primerNombre}) + " " +
+($P{apellidoPaterno} == null ? "" : $P{apellidoPaterno}) + " " +
+($P{apellidoMaterno} == null ? "" : $P{apellidoMaterno})]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MM-yyyy HH:mm">
+				<reportElement style="Value" x="0" y="48" width="515" height="14" uuid="4ed0f8c7-6b06-4d69-940d-0a7b82b09a4f"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{fechaEmision}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="8">
+			<line>
+				<reportElement x="0" y="4" width="515" height="1" uuid="2f1dfc7a-6f9c-4d7d-8f41-7f7c8e16e948"/>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="327">
+			<staticText>
+				<reportElement style="H1" x="0" y="0" width="515" height="16" uuid="a2ef5e9c-1bb0-4d3a-a0d7-ef26a0e8d3ef"/>
+				<text><![CDATA[Datos del trabajador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Label" x="0" y="42" width="120" height="14" uuid="806bd74c-50ea-4cc7-8ba2-e4d329617656"/>
+				<text><![CDATA[Email]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="Value" x="125" y="42" width="390" height="14" uuid="8e52b2da-76b5-41b5-a830-e33311450ebe"/>
+				<textFieldExpression><![CDATA[$P{email}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="66" width="515" height="1" uuid="8411b316-5bb2-4d23-b0cd-ce845fc1b083"/>
+			</line>
+			<staticText>
+				<reportElement style="H1" x="0" y="78" width="515" height="16" uuid="0b8f4a85-0e88-4d4b-9c37-9a0d59a1a62b"/>
+				<text><![CDATA[Dispositivos asignados]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="0" y="100" width="515" height="170" uuid="a5a2a0e2-13ef-4cc2-bf4e-f6f0e4b0f1a9"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="DispositivosDataset" uuid="6e879a4c-e964-48df-8c1a-bbe84db649c3">
+						<dataSourceExpression><![CDATA[$P{dispositivosDataSource}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="120" uuid="0aeac6ee-b919-4264-9e71-a146f39a9134">
+						<jr:columnHeader height="18">
+							<staticText>
+								<reportElement style="TableHeader" x="0" y="0" width="120" height="18" uuid="02a7cec2-e6c9-4797-9182-7a7e2401bfc1"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Código]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="18">
+							<textField>
+								<reportElement style="TableCell" x="0" y="0" width="120" height="18" uuid="6a51afda-cc7e-4aaa-9c04-af63796e4fb5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{codigoIdentificador}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="95" uuid="2c9952e9-75a0-45ec-8824-ea2f5629406c">
+						<jr:columnHeader height="18">
+							<staticText>
+								<reportElement style="TableHeader" x="0" y="0" width="95" height="18" uuid="e06a2c97-a74c-4bed-81ac-0951a89a13ff"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Marca]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="18">
+							<textField>
+								<reportElement style="TableCell" x="0" y="0" width="95" height="18" uuid="ec878ae9-5ed3-4b26-8de4-3450a99adddd"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{marca}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="95" uuid="81dcd556-8a2e-44e5-af27-8630905e0eb0">
+						<jr:columnHeader height="18">
+							<staticText>
+								<reportElement style="TableHeader" x="0" y="0" width="95" height="18" uuid="0bda8a58-2ce6-4f26-b681-c96ec4485700"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Modelo]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="18">
+							<textField>
+								<reportElement style="TableCell" x="0" y="0" width="95" height="18" uuid="1706aeae-f3fa-44f6-ab19-1cf7bcea7dd8"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{modelo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="78b4fba4-9572-4fc3-8dd1-a0ce66e8c3cd">
+						<jr:columnHeader height="18">
+							<staticText>
+								<reportElement style="TableHeader" x="0" y="0" width="70" height="18" uuid="6c2f4385-dcec-4532-abf6-110509bf5af7"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Precio]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="18">
+							<textField>
+								<reportElement style="TableCell" x="0" y="0" width="70" height="18" uuid="22501f6d-2495-48cc-b67d-905b3ffc726f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="135" uuid="0c9e86f0-0632-4666-83d8-d42a2473d443">
+						<jr:columnHeader height="18">
+							<staticText>
+								<reportElement style="TableHeader" x="0" y="0" width="135" height="18" uuid="0187da76-2450-4248-b817-dea38f307d2a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Fecha Compra]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="18">
+							<textField pattern="dd-MM-yyyy">
+								<reportElement style="TableCell" x="0" y="0" width="135" height="18" uuid="4cd89836-794a-48a3-8794-c07c0a411d43"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{fechaAdquisicion}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<textField textAdjust="StretchHeight">
+				<reportElement style="Value" x="0" y="280" width="515" height="40" uuid="61833b36-f8de-44d4-bd19-66ae7a1327a3"/>
+				<textFieldExpression><![CDATA["El trabajador posee " + $V{REPORT_COUNT} + " dispositivo(s) listados en este documento."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Label" x="0" y="20" width="120" height="14" uuid="6bc08241-864f-4997-b717-0f80ab7f0bb4"/>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="125" y="20" width="381" height="14" uuid="533eebf7-9a51-49ad-a1bd-74672c996e33"/>
+				<textFieldExpression><![CDATA[($P{primerNombre} == null ? "" : $P{primerNombre}) + " " +
+($P{apellidoPaterno} == null ? "" : $P{apellidoPaterno}) + " " +
+($P{apellidoMaterno} == null ? "" : $P{apellidoMaterno})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="24">
+			<textField>
+				<reportElement style="Value" x="0" y="6" width="260" height="14" uuid="9728d6da-99d0-4042-be93-93f58915ca92"/>
+				<textFieldExpression><![CDATA["Firma Trabajador: ____________________________"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Value" x="285" y="6" width="230" height="14" uuid="5e73cb70-d153-407b-aafa-27d93db5404d"/>
+				<textFieldExpression><![CDATA["Firma Empresa: ____________________________"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

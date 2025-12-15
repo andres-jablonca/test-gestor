@@ -54,12 +54,22 @@ public class TrabajadorController {
         trabajadorService.eliminarTrabajador(rut);
     }
 
-    @GetMapping("/{rut}/pdf")
-    public ResponseEntity<byte[]> exportPdf(@PathVariable String rut) {
+    @GetMapping("/{rut}/anexo-contrato")
+    public ResponseEntity<byte[]> exportarPdfAnexo(@PathVariable String rut) {
         byte[] pdf = trabajadorService.generarPdfAnexoContrato(rut);
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=anexo_" + rut + ".pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdf);
+    }
+
+    @GetMapping("/{rut}/dispositivos")
+    public ResponseEntity<byte[]> exportarPdfDispositivos(@PathVariable String rut) {
+        byte[] pdf = trabajadorService.generarPdfDispositivosTrabajador(rut);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=dispositivos_" + rut + ".pdf")
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(pdf);
     }
